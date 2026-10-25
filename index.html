@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071426">
+<title>GLOBAL NEWS LEVI</title>
+<style>
+:root{--bg:#06101f;--panel:#0c1b30;--line:#1b3552;--text:#f4f8ff;--muted:#a7bad1;--red:#ff3048;--blue:#168dff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -20%,#15345a 0,#06101f 55%);color:var(--text);font:16px/1.45 Arial,Helvetica,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px clamp(14px,3vw,32px);border-bottom:1px solid var(--line);background:#071426eF;position:sticky;top:0;z-index:3}
+.brand{font-weight:900;letter-spacing:1.2px;font-size:clamp(18px,3vw,27px)}.brand span{color:var(--red)}.live{font-size:11px;font-weight:bold;background:#381321;color:#ff8190;padding:6px 9px;border-radius:5px;letter-spacing:1px}
+main{max-width:1280px;margin:auto;padding:18px clamp(12px,2.5vw,28px) 38px}.statusbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin:0 0 14px}
+.hero{min-height:310px;border:1px solid #24466b;border-radius:14px;overflow:hidden;position:relative;padding:clamp(20px,4vw,44px);background:linear-gradient(105deg,#06101feF 0%,#07182add 55%,#07142688 100%),url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1500&q=85') center/cover}
+.eyebrow{display:inline-block;background:var(--red);font-weight:900;letter-spacing:1.5px;font-size:12px;padding:7px 10px;border-radius:4px}.hero h1{font-size:clamp(27px,5vw,54px);line-height:1.05;max-width:850px;margin:18px 0 12px}.hero p{color:#d2deee;max-width:750px}.meta{font-size:12px;color:#a8bfd9}
+.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,1fr);gap:16px;margin-top:18px}.panel{background:#0a192b;border:1px solid var(--line);border-radius:12px;overflow:hidden}.panelhead{padding:13px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}.panelhead h2{font-size:15px;margin:0;letter-spacing:.7px}.list{padding:0 16px}.story{padding:15px 0;border-bottom:1px solid #18304a}.story:last-child{border-bottom:0}.story a{color:var(--text);text-decoration:none;font-size:16px;font-weight:700}.story a:hover{color:#6bb6ff}.story p{color:var(--muted);font-size:13px;margin:7px 0}.tag{font-size:10px;color:#8fc6ff;text-transform:uppercase;letter-spacing:1px;font-weight:800}.smallmeta{font-size:11px;color:#8099b5}.side .story a{font-size:14px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #315579;color:#eaf4ff;background:#102a46;padding:9px 12px;border-radius:7px;font-weight:700;cursor:pointer}.btn:hover{background:#19416a}.btn.red{background:#a9192e;border-color:#c92a40}.ticker{position:sticky;bottom:0;background:#09172a;border-top:2px solid var(--red);display:flex;gap:0;z-index:2}.ticker strong{background:var(--red);padding:12px 14px;font-size:12px;white-space:nowrap}.ticker div{padding:11px 14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#d8e6f8;font-size:13px}
+.empty{padding:25px 0;color:var(--muted)}.error{color:#ff9aa6}.audio{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.audio input[type=range]{width:85px}.foot{color:#7389a3;font-size:11px;margin:16px 3px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}.hero{min-height:270px}.side .list{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.side .story a{font-size:13px}header{position:relative}.ticker{position:relative}}
+@media(max-width:440px){.side .list{grid-template-columns:1fr}.hero{padding:20px}.toolbar{width:100%}.btn{padding:8px 10px}}
+</style>
+</head>
+<body>
+<header><div class="brand">GLOBAL NEWS <span>LEVI</span></div><div class="live">● WORLD NEWS</div></header>
+<main>
+<div class="statusbar"><span id="status">Connecting to live news sources…</span><span id="updated">Last checked: —</span></div>
+<section class="hero">
+<div class="eyebrow">LATEST WORLD NEWS</div>
+<h1 id="heroTitle">Connecting to verified news feeds…</h1>
+<p id="heroSummary">Headlines will appear here when the live news feeds load.</p>
+<div class="meta" id="heroMeta">GLOBAL NEWS LEVI · LIVE RSS</div>
+</section>
+<div class="grid">
+<section class="panel"><div class="panelhead"><h2>TOP STORIES</h2><div class="toolbar"><button class="btn red" id="refresh">↻ Refresh</button></div></div><div class="list" id="topList"><div class="empty">Loading current headlines…</div></div></section>
+<aside class="panel side"><div class="panelhead"><h2>MORE HEADLINES</h2><span class="tag">LIVE RSS</span></div><div class="list" id="sideList"><div class="empty">Waiting for feeds…</div></div></aside>
+</div>
+<section class="panel" style="margin-top:16px"><div class="panelhead"><h2>CONTROL ROOM</h2><span class="tag">NO AI VOICE</span></div><div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap"><div class="audio"><input id="audioFile" type="file" accept="audio/*" aria-label="Choose background music"><button class="btn" id="play">▶ Play music</button><label class="smallmeta">Volume <input id="volume" type="range" min="0" max="1" step=".05" value=".25"></label></div><span class="smallmeta">Choose an audio file on your phone to play background music.</span></div><audio id="audio" loop></audio></section>
+<div class="foot">Headlines link to their original publishers. RSS availability and publication times depend on each publisher. This page does not independently verify every report.</div>
+</main>
+<div class="ticker"><strong>NEWS TICKER</strong><div id="tickerText">Live headlines will appear here after feeds load.</div></div>
+<script>
+const $=id=>document.getElementById(id);
+let stories=[];
+function safeDate(s){const d=new Date(s);return isNaN(d)?null:d}
+function timeLabel(s){const d=safeDate(s);return d?d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC'})+' UTC':'Time unavailable'}
+function escapeHTML(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function clean(s=''){const d=document.createElement('div');d.innerHTML=s;return (d.textContent||d.innerText||'').replace(/\s+/g,' ').trim()}
+function renderStory(s){const summary=clean(s.description||s.content||'');return `<article class="story"><div class="tag">${escapeHTML(s.source||'NEWS')} · ${escapeHTML(timeLabel(s.pubDate))}</div><div style="margin-top:6px"><a href="${escapeHTML(s.link)}" target="_blank" rel="noopener noreferrer">${escapeHTML(s.title)}</a></div>${summary?`<p>${escapeHTML(summary.slice(0,210))}${summary.length>210?'…':''}</p>`:''}<div class="smallmeta">Source: ${escapeHTML(s.source||'Publisher')}</div></article>`}
+function render(){
+ if(!stories.length){$('topList').innerHTML='<div class="empty error">No stories loaded yet. Tap Refresh to try again. If this continues, check your internet connection or the hosting/API settings.</div>';return}
+ const first=stories[0], summary=clean(first.description||'');
+ $('heroTitle').textContent=first.title;$('heroSummary').textContent=summary.slice(0,260)||'Open the publisher link to read the full report.';$('heroMeta').textContent=(first.source||'NEWS')+' · '+timeLabel(first.pubDate);
+ $('topList').innerHTML=stories.slice(0,12).map(renderStory).join('');
+ $('sideList').innerHTML=stories.slice(12,24).map(renderStory).join('')||'<div class="empty">No additional stories at the moment.</div>';
+ $('tickerText').textContent=stories.slice(0,10).map(s=>s.title).join('  •  ')||'No headlines yet';
+}
+async function loadNews(){
+ $('status').textContent='Refreshing live RSS feeds…';$('refresh').disabled=true;
+ try{
+  const r=await fetch('/api/news',{cache:'no-store'});
+  if(!r.ok) throw new Error('News service returned '+r.status);
+  const data=await r.json();
+  stories=(data.items||[]).filter(x=>x.title&&x.link).sort((a,b)=>(safeDate(b.pubDate)?.getTime()||0)-(safeDate(a.pubDate)?.getTime()||0));
+  render();
+  $('status').textContent=`${data.feedsOk||0}/${data.feedsTotal||0} feeds connected · ${stories.length} headlines`;
+  $('updated').textContent='Last checked: '+new Date().toLocaleTimeString();
+  if(!stories.length && data.errors?.length) $('status').textContent='Feeds temporarily unavailable';
+ }catch(e){$('status').innerHTML='<span class="error">News connection failed: '+escapeHTML(e.message)+'</span>';if(!stories.length)render()}
+ finally{$('refresh').disabled=false}
+}
+$('refresh').addEventListener('click',loadNews);
+setInterval(loadNews,5*60*1000);loadNews();
+const audio=$('audio');$('audioFile').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(f){audio.src=URL.createObjectURL(f);audio.load();$('play').textContent='▶ Play music'}});
+$('play').addEventListener('click',async()=>{if(!audio.src){$('audioFile').click();return}if(audio.paused){try{await audio.play();$('play').textContent='❚❚ Pause music'}catch(e){$('status').textContent='Tap Play again to allow music playback.'}}else{audio.pause();$('play').textContent='▶ Play music'}});
+$('volume').addEventListener('input',e=>audio.volume=Number(e.target.value));audio.volume=.25;
+</script>
+</body></html>
